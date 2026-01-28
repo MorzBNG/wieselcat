@@ -13,18 +13,22 @@ void getInputMapSize(int *mapSize) {
     
     string dimInput = "";
     getline(::cin, dimInput);
-    //dimInput.erase(remove_if(dimInput.begin(), dimInput.end(), ::isspace), dimInput.end());
     
-    if (all_of(dimInput.begin(), dimInput.end(), ::isdigit)) {
-        *mapSize = stoi(dimInput);
-        float mapArea = *mapSize * *mapSize;
-        mapArea = mapArea / 1000000;
-        cout << "Size set to " << *mapSize << "m * " << *mapSize << "m = " << mapArea << "km^2" << endl;
+    if (!all_of(dimInput.begin(), dimInput.end(), ::isdigit)) {
+        cout << "\nWrong input format, Try again!" << endl;
+        getInputMapSize(mapSize);
+        return;
+    }
+    
+    int sizeInput = stoi(dimInput);
+
+    if (sizeInput < 32 || sizeInput > 65536) {
+        cout << "Size limits are 32 <= x <= 65536" << endl;
+        getInputMapSize(mapSize);
         return;
     }
 
-    cout << "\nWrong input format, Try again!" << endl;
-    getInputMapSize(mapSize);
+    *mapSize = sizeInput;
 }
 
 int main(int argc, char *argv[]) {
@@ -34,6 +38,9 @@ int main(int argc, char *argv[]) {
     cout << "Wieselcat V0.0.1\n\nTickleTheShark Inc.\nby MorzBNG\n----------------------------\n\n";
     
     getInputMapSize(&mapSize);
+
+    float mapArea = ((float)mapSize/1000) * ((float)mapSize/1000);
+    cout << "Size set to " << mapSize << "m * " << mapSize << "m = " << mapArea << "km^2" << endl;
 
     return 1;
 }
