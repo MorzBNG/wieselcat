@@ -25,7 +25,8 @@ void getMapSizeInput(int *mapSize) {
         getMapSizeInput(mapSize);
         return;
     }
-
+    if (sizeInput == 1337) puts("\u2587\u2585\u2586\u2587\u2586\u2585\u2585\u2588");
+    
     *mapSize = sizeInput;
 }
 
