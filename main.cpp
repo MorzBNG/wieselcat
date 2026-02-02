@@ -33,7 +33,6 @@ void getMapSizeInput(int *mapSize) {
 int main(int argc, char *argv[]) {
     //handle arguments
     //getopt
-    //print software signature
     puts("Wieselcat V0.0.1\n\nTickleTheShark Inc.\nby MorzBNG\n----------------------------\n");
 
     getMapSizeInput(&mapSize);
@@ -42,6 +41,7 @@ int main(int argc, char *argv[]) {
     cout << "Size set to " << mapSize << "m * " << mapSize << "m = " << mapArea << "km^2\n";
     
     printTerrain();
-
-    return 1;
+    
+    puts("\x1b[0m");
+    return 0;
 }
