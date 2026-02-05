@@ -1,7 +1,7 @@
 #ifndef VISUALIZATION_H
 
 #define VISUALIZATION_H
-
-void printTerrain();
+#include "terrain.h"
+void printTerrain(Terrain *terr);
 
 #endif

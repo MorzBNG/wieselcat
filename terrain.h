@@ -9,5 +9,6 @@ struct Terrain {
 };
 
 Terrain *generateFlatTerrain(int *mapSize);
+Terrain *generateDonutTerrain(int *mapSize);
 void deleteTerrain(Terrain *terr);
 #endif
