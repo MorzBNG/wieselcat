@@ -2,6 +2,7 @@
 #include <string>
 #include <algorithm>
 #include "visualization.h"
+#include "terrain.h"
 using namespace std;
 
 int mapSize = 2048;
@@ -17,7 +18,7 @@ void getMapSizeInput(int *mapSize) {
         getMapSizeInput(mapSize);
         return;
     }
-    
+
     int sizeInput = stoi(dimInput);
 
     if (sizeInput < 32 || sizeInput > 65536) {
@@ -43,5 +44,19 @@ int main(int argc, char *argv[]) {
     printTerrain();
     
     puts("\x1b[0m");
+
+    Terrain *terr = generateFlatTerrain(&mapSize);
+    for (int i=0; i<terr->size; i++) {
+        for (int j=0; j<terr->size; j++) {
+            cout << terr->heightfield[i][j];
+        }
+        cout << "\n";
+    }
+    //for (int k=0; k<terr->size; k++) {
+    //    cout << terr->heightfield[k] << "\n";
+    //}
+    //cout << terr->heightfield << "\n";
+    //cout << terr->heightfield[0] << "\n";
+    deleteTerrain(terr);
     return 0;
 }

@@ -5,7 +5,7 @@ struct Terrain {
     int size;
     float area;
     float verticalRange;
-    float heightfield[];
+    float **heightfield;
 };
 
 Terrain *generateFlatTerrain(int *mapSize);
