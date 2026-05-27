@@ -24,9 +24,9 @@ Terrain *generateDonutTerrain(int *terrainSize) {
     Terrain *terr = generateFlatTerrain(terrainSize);
     float height = 0;
     float x = 0;
-    for (int i=0; i<terr->size; i++) {
-        for (int j=0; j<terr->size; j++) {
-            x = sqrt(pow(i-terr->size/2,2)+pow(j-terr->size/2,2))/terr->size*10;
+    for (int i=0; i<*terrainSize; i++) {
+        for (int j=0; j<*terrainSize; j++) {
+            x = sqrt(pow(i-*terrainSize/2,2)+pow(j-*terrainSize/2,2))/ *terrainSize*10;
             height = bimodalDistribution(x);
             terr->heightfield[i][j] = height*1.25;
         }
