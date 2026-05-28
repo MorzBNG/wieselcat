@@ -8,34 +8,49 @@ using namespace std;
 int terrainSize = 2048;
 int terrainResolution = 2048;
 
+bool inputIsInteger(string input) {
+    if (input.length() > 5) {
+        puts("Input too long, try again!\n");
+        return false;
+    }
+
+    if (!all_of(input.begin(), input.end(), ::isdigit)) {
+        puts("Input is not an integer, try again!\n");
+        return false;
+    }
+
+    return true;
+}
+
+bool inputInLimits(int input, int lower, int upper) {
+    if (input < lower || input > upper) {
+        cout << "Size limits are " << lower << " <= x <= " << upper << ", try again!\n" << endl;
+        return false;
+    }
+    return true;
+}
+
 void getTerrainSizeInput(int *terrainSize) {
     puts("Input map size in meters:");
 
     string dimInput = "";
     getline(::cin, dimInput);
 
-    if (dimInput.length() > 5) { 
-        puts("Input too long, try again!\n");
+    if (!inputIsInteger(dimInput)) {
         getTerrainSizeInput(terrainSize);
         return;
     }
 
-    if (!all_of(dimInput.begin(), dimInput.end(), ::isdigit)) {
-        puts("Input is not an integer, try again!\n");
+    int size = stoi(dimInput);
+
+    if (!inputInLimits(size, 32, 65536)) {
         getTerrainSizeInput(terrainSize);
         return;
     }
 
-    int sizeInput = stoi(dimInput);
+    if (size == 1337) puts("\u2587\u2585\u2586\u2587\u2586\u2585\u2585\u2588");
 
-    if (sizeInput < 32 || sizeInput > 65536) {
-        puts("Size limits are 32 <= x <= 65536, try again!\n");
-        getTerrainSizeInput(terrainSize);
-        return;
-    }
-    if (sizeInput == 1337) puts("\u2587\u2585\u2586\u2587\u2586\u2585\u2585\u2588");
-
-    *terrainSize = sizeInput;
+    *terrainSize = size;
 }
 
 void getTerrainResolutionInput(int *terrainResolution) {
@@ -44,12 +59,21 @@ void getTerrainResolutionInput(int *terrainResolution) {
     string resInput = "";
     getline(::cin, resInput);
 
-    if (!all_of(resInput.begin(), resInput.end(), ::isdigit)) {
-        puts("Input is not an integer, try again!\n");
+    if (!inputIsInteger(resInput)) {
         getTerrainResolutionInput(terrainResolution);
         return;
     }
+
+    int resolution = stoi(resInput);
+
+    if (!inputInLimits(resolution, 32, 4096)) {
+        getTerrainResolutionInput(terrainResolution);
+        return;
+    }
+
+    *terrainResolution = resolution;
 }
+
 
 int main(int argc, char *argv[]) {
     //handle arguments getopt
@@ -68,5 +92,5 @@ int main(int argc, char *argv[]) {
     puts("\x1b[0m");
 
     deleteTerrain(terr);
-    return 0;
+    return 1;
 }
