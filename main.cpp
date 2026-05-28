@@ -10,12 +10,12 @@ int terrainResolution = 2048;
 
 bool inputIsInteger(string input) {
     if (input.length() > 5) {
-        puts("Input too long, try again!\n");
+        puts("Input too long!\n");
         return false;
     }
 
     if (!all_of(input.begin(), input.end(), ::isdigit)) {
-        puts("Input is not an integer, try again!\n");
+        puts("Input is not an integer!\n");
         return false;
     }
 
@@ -24,7 +24,7 @@ bool inputIsInteger(string input) {
 
 bool inputInLimits(int input, int lower, int upper) {
     if (input < lower || input > upper) {
-        cout << "Size limits are " << lower << " <= x <= " << upper << ", try again!\n" << endl;
+        cout << "Size limits are " << lower << " <= x <= " << upper << "!\n" << endl;
         return false;
     }
     return true;
