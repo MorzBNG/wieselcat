@@ -3,6 +3,7 @@
 #include <algorithm>
 #include "visualization.h"
 #include "terrain.h"
+#include "message.h"
 using namespace std;
 
 int terrainSize = 2048; //m
@@ -27,6 +28,7 @@ bool inputInLimits(int input, int lower, int upper) {
         cout << "Size limits are " << lower << " <= x <= " << upper << "!\n" << endl;
         return false;
     }
+    if (input % 2 != 0) printMsg("Dimensions that are not powers of two may lead to unexpected behavior", 1);
     return true;
 }
 
@@ -90,7 +92,7 @@ int main(int argc, char *argv[]) {
     Terrain *terr = generateDonutTerrain(&terrainResolution);
 
     printTerrain(terr);
-    puts("\x1b[0m");
+    puts("\x001b[0m");
 
     deleteTerrain(terr);
     return 1;
