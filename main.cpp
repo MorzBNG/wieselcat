@@ -28,7 +28,7 @@ bool inputInLimits(int input, int lower, int upper) {
         cout << "Size limits are " << lower << " <= x <= " << upper << "!\n" << endl;
         return false;
     }
-    if (input % 2 != 0) printMsg("Dimensions that are not powers of two may lead to unexpected behavior", 1);
+    if (__builtin_popcountll(input) != 1) printMsg("Dimensions that are not powers of two may lead to unexpected behavior", 1);
     return true;
 }
 
