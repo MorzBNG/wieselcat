@@ -5,7 +5,7 @@
 #include "terrain.h"
 using namespace std;
 
-int terrainSize = 2048;
+int terrainSize = 2048; //m
 int terrainResolution = 2048;
 
 bool inputIsInteger(string input) {
@@ -74,16 +74,17 @@ void getTerrainResolutionInput(int *terrainResolution) {
     *terrainResolution = resolution;
 }
 
+void printTerrainArea(int *terrainSize) {
+    float terrainArea = ((float)*terrainSize/1000) * ((float)*terrainSize/1000);
+    cout << "Terrain Area is  " << *terrainSize << "m * " << *terrainSize << "m = " << terrainArea << "km^2\n\n";
+}
 
 int main(int argc, char *argv[]) {
     //handle arguments getopt
     puts("Wieselcat V0.0.1\n\nTickleTheShark Inc.\nby MorzBNG\n----------------------------\n");
 
     getTerrainSizeInput(&terrainSize);
-
-    float terrainArea = ((float)terrainSize/1000) * ((float)terrainSize/1000);
-    cout << "Size set to " << terrainSize << "m * " << terrainSize << "m = " << terrainArea << "km^2\n";
-
+    printTerrainArea(&terrainSize);
     getTerrainResolutionInput(&terrainResolution);
 
     Terrain *terr = generateDonutTerrain(&terrainResolution);
@@ -93,4 +94,5 @@ int main(int argc, char *argv[]) {
 
     deleteTerrain(terr);
     return 1;
+    //or are you unforgiven too?
 }
