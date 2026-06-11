@@ -23,7 +23,7 @@ bool inputIsInteger(string input) {
     return true;
 }
 
-bool inputInLimits(int input, int lower, int upper) {
+bool inputInLimits(const int input, const int lower, const int upper) {
     if (input < lower || input > upper) {
         cout << "Size limits are " << lower << " <= x <= " << upper << "!\n" << endl;
         return false;
@@ -35,7 +35,7 @@ bool inputInLimits(int input, int lower, int upper) {
 void getTerrainSizeInput(int *terrainSize) {
     puts("Input map size in meters:");
 
-    string dimInput = "";
+    string dimInput;
     getline(::cin, dimInput);
 
     if (!inputIsInteger(dimInput)) {
@@ -58,7 +58,7 @@ void getTerrainSizeInput(int *terrainSize) {
 void getTerrainResolutionInput(int *terrainResolution) {
     puts("Input map resolution:");
 
-    string resInput = "";
+    string resInput;
     getline(::cin, resInput);
 
     if (!inputIsInteger(resInput)) {
@@ -66,7 +66,7 @@ void getTerrainResolutionInput(int *terrainResolution) {
         return;
     }
 
-    int resolution = stoi(resInput);
+    const int resolution = stoi(resInput);
 
     if (!inputInLimits(resolution, 32, 4096)) {
         getTerrainResolutionInput(terrainResolution);
