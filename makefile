@@ -1,70 +1,35 @@
-# tool macros
-CC ?= # FILL: the compiler
-CXX ?= g++
-CFLAGS := # FILL: compile flags
+CXX := g++
 CXXFLAGS := -std=c++11 -Wall -Wextra
-DBGFLAGS := -g
-COBJFLAGS := $(CXXFLAGS) -c
 
-# path macros
-BIN_PATH := bin
-BUILD_PATH := build
-SRC_PATH := noise
-DBG_PATH := debug
+TARGETNAME := wieselcat
 
-# compile macros
-TARGET_NAME := wieselcat
-ifeq ($(OS),Windows_NT)
-	TARGET_NAME := $(addsuffix .exe,$(TARGET_NAME))
-endif
-TARGET := $(BIN_PATH)/$(TARGET_NAME)
-TARGET_DEBUG := $(DBG_PATH)/$(TARGET_NAME)
+BINPATH := bin
+BUILDPATH := build
+SRCPATH := . ./noise
 
-# src files & obj files
-SRC := $(foreach x, $(SRC_PATH), $(wildcard $(addprefix $(x)/*,.c*)))
-OBJ := $(addprefix $(BUILD_PATH)/, $(addsuffix .o, $(notdir $(basename $(SRC)))))
-OBJ_DEBUG := $(addprefix $(DBG_PATH)/, $(addsuffix .o, $(notdir $(basename $(SRC)))))
+TARGET := $(BINPATH)/$(TARGETNAME)
 
-# clean files list
-DISTCLEAN_LIST := $(OBJ) \
-                  $(OBJ_DEBUG)
-CLEAN_LIST := $(TARGET) \
-			  $(TARGET_DEBUG) \
-			  $(DISTCLEAN_LIST)
+SRC := $(foreach x, $(SRCPATH), $(wildcard $(addprefix $(x)/*,.cpp)))
+OBJ := $(subst ./,,$(addprefix $(BUILDPATH)/, $(addsuffix .o, $(basename $(SRC)))))
+OBJPATHS := $(sort $(dir $(OBJ)))
 
-# default rule
-default: makedir all
 
-# non-phony targets
+default: makedirs $(TARGET)
+
+#$(info $(sort $(dir $(OBJ))))
+#$(info SRC is $(SRC))
+#$(info OBJ is $(OBJ))
+
 $(TARGET): $(OBJ)
-	$(CXX) -o $@ $(OBJ) $(CXXFLAGS)
+	@echo "building $(notdir $@)"; $(CXX) $(CXXFLAGS) $^ -o $@
 
-$(BUILD_PATH)/%.o: $(SRC_PATH)/%.c*
-	$(CXX) $(COBJFLAGS) -o $@ $<
+$(BUILDPATH)/%.o: ./%.cpp
+	@echo "compiling $@"; $(CXX) -c $(CXXFLAGS) $^ -o $@
 
-$(DBG_PATH)/%.o: $(SRC_PATH)/%.c*
-	$(CXX) $(COBJFLAGS) $(DBGFLAGS) -o $@ $<
-
-$(TARGET_DEBUG): $(OBJ_DEBUG)
-	$(CXX) $(CXXFLAGS) $(DBGFLAGS) $(OBJ_DEBUG) -o $@
-
-# phony rules
-.PHONY: makedir
-makedir:
-	@mkdir -p $(BIN_PATH) $(BUILD_PATH)
-
-.PHONY: all
-all: $(TARGET)
-
-.PHONY: debug
-debug: $(TARGET_DEBUG)
+.PHONY: makedirs
+makedirs:
+	@mkdir -p $(OBJPATHS) $(BINPATH)
 
 .PHONY: clean
 clean:
-	@echo CLEAN $(CLEAN_LIST)
-	@rm -f $(CLEAN_LIST)
-
-.PHONY: distclean
-distclean:
-	@echo CLEAN $(DISTCLEAN_LIST)
-	@rm -f $(DISTCLEAN_LIST)
+	@rm -r -f $(BINPATH)/* $(BUILDPATH)/*
