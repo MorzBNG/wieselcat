@@ -21,10 +21,10 @@ default: makedirs $(TARGET)
 #$(info OBJ is $(OBJ))
 
 $(TARGET): $(OBJ)
-	@echo "building $(notdir $@)"; $(CXX) $(CXXFLAGS) $^ -o $@
+	@echo "linking $(notdir $@)"; $(CXX) $(CXXFLAGS) $^ -o $@
 
 $(BUILDPATH)/%.o: ./%.cpp
-	@echo "compiling $@"; $(CXX) -c $(CXXFLAGS) $^ -o $@
+	@echo "compiling and assembling $@"; $(CXX) -c $(CXXFLAGS) $^ -o $@
 
 .PHONY: makedirs
 makedirs:
