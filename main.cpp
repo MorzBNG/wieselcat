@@ -32,48 +32,48 @@ bool inputInLimits(const int input, const int lower, const int upper) {
     return true;
 }
 
-void getTerrainSizeInput(int *terrainSize) {
+void getTerrainSizeInput() {
     puts("Input map size in meters:");
 
     string dimInput;
     getline(::cin, dimInput);
 
     if (!inputIsInteger(dimInput)) {
-        getTerrainSizeInput(terrainSize);
+        getTerrainSizeInput();
         return;
     }
 
     int size = stoi(dimInput);
 
     if (!inputInLimits(size, 32, 65536)) {
-        getTerrainSizeInput(terrainSize);
+        getTerrainSizeInput();
         return;
     }
 
     if (size == 1337) puts("\u2587\u2585\u2586\u2587\u2586\u2585\u2585\u2588");
 
-    *terrainSize = size;
+    terrainSize = size;
 }
 
-void getTerrainResolutionInput(int *terrainResolution) {
+void getTerrainResolutionInput() {
     puts("Input map resolution:");
 
     string resInput;
     getline(::cin, resInput);
 
     if (!inputIsInteger(resInput)) {
-        getTerrainResolutionInput(terrainResolution);
+        getTerrainResolutionInput();
         return;
     }
 
     const int resolution = stoi(resInput);
 
     if (!inputInLimits(resolution, 32, 4096)) {
-        getTerrainResolutionInput(terrainResolution);
+        getTerrainResolutionInput();
         return;
     }
 
-    *terrainResolution = resolution;
+    terrainResolution = resolution;
 }
 
 void printTerrainArea(int *terrainSize) {
@@ -85,9 +85,9 @@ int main(int argc, char *argv[]) {
     //handle arguments getopt
     puts("Wieselcat V0.0.1\n\nTickleTheShark Inc.\nby MorzBNG\n----------------------------\n");
 
-    getTerrainSizeInput(&terrainSize);
+    getTerrainSizeInput();
     printTerrainArea(&terrainSize);
-    getTerrainResolutionInput(&terrainResolution);
+    getTerrainResolutionInput();
 
     Terrain *terr = generateDonutTerrain(&terrainResolution);
 
